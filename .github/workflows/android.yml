@@ -11,11 +11,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Buildozer
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip python3-venv git zip unzip
+          python3 -m pip install --user buildozer cython
+
       - name: Build APK
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          command: buildozer android debug
-          workdir: .
+        run: |
+          ~/.local/bin/buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
